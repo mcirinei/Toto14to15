@@ -147,9 +147,9 @@ object Main: TMain
     UseDockManager = True
   end
   object btnEsegui: TButton
-    Left = 655
+    Left = 620
     Top = 415
-    Width = 104
+    Width = 143
     Height = 36
     Caption = 'Esegui conversione'
     TabOrder = 5
@@ -215,5 +215,19 @@ object Main: TMain
     Caption = 'DISTRIB. SEGNI'
     TabOrder = 8
     UseDockManager = True
+  end
+  object ComboBox1: TComboBox
+    Left = 361
+    Top = 422
+    Width = 145
+    Height = 21
+    Style = csDropDownList
+    ItemIndex = 0
+    TabOrder = 9
+    Text = 'Formula Il 13'
+    OnChange = ComboBox1Change
+    Items.Strings = (
+      'Formula Il 13'
+      'Formula 11')
   end
 end

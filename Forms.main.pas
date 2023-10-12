@@ -56,10 +56,12 @@ type
     StatusBar1: TStatusBar;
     grdBVS: TRzStringGrid;
     XiPanel1: TXiPanel;
+    ComboBox1: TComboBox;
     procedure FormShow(Sender: TObject);
     procedure grdPosizioniSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
     procedure edtFileColoChange(Sender: TObject);
     procedure btnEseguiClick(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
 
   private
     NumColOK: Integer;
@@ -101,7 +103,7 @@ begin
     raise Exception.Create('Devi indicare un file colonnare da convertire valido');
 
   // verifica che le posizioni siano tutte correttamente inserite
-  for index := 9 to 13 do
+  for index := 9 to dmMain.FNumEventi do
     if dmmain.Posizioni[index] in [9 .. 20] then
     else
       raise Exception.Create('Posizione non valida per la partita ' + index.ToString);
@@ -112,6 +114,12 @@ begin
   // aggiorna status
   StatusBar1.Panels[0].text := 'Creato il file ' + ExtractFilePath(dmmain.NomeFileSCH) + System.IOUtils.TPath.GetFileNameWithoutExtension
     (dmmain.NomeFileSCH) + '_2022.SCH, ' + dmmain.NumSchedine.ToString + ' schedine, ' + dmmain.numColSviluppo.ToString + ' colonne';
+end;
+
+procedure TMain.ComboBox1Change(Sender: TObject);
+begin
+  dmmain.FFormula := TComboBox(Sender).ItemIndex+1;
+  dmmain.FNumEventi := 13-(dmmain.FFormula-1)*2;
 end;
 
 procedure TMain.DoCaricaSchedina;

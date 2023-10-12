@@ -36,6 +36,7 @@ type
 
     DatiAnalisi: array [1..20, 1..3] of integer;
     numColSviluppo, NumSchedine: integer;
+    FFormula, FNumEventi: Integer;
 
     NomeFileSCH: string;
 
@@ -76,7 +77,7 @@ end;
 procedure TdmMain.ConvertiFileSCH(nomefileSCH: string);
 var
   index, indexSeg: integer;
-  LPos: integer;
+  LPos, LSecondSect: integer;
   LFooter: Word;
 
   FileSch14, FileSch2022: file;
@@ -99,9 +100,17 @@ begin
       BlockRead(Filesch14, ColSCH, Sizeof(ColSch));
       //copia pari pari i primi 8 segni
       for indexSeg := 1 to 3 do
-        ColSCH2022[indexSeg] := ColSCH[indexSeg] and 255;
-      //e assegna gli altri 5 in base alla tabella delle posizioni
-      for index := 9 to 13 do begin
+        if FNumEventi=13  then
+          ColSCH2022[indexSeg] := ColSCH[indexSeg] and 255
+        else
+          ColSCH2022[indexSeg] := ColSCH[indexSeg] and 127;
+      //quanti nel secondo pannello?
+      if FNumEventi=13 then
+        LSecondSect := 4
+      else
+        LSecondSect := 3;
+      //e assegna gli altri in base alla tabella delle posizioni
+      for index := 9 to (9+LSecondSect) do begin
         LPos := Posizioni[index];
         for indexSeg := 1 to 3 do
           if ColSCH[indexSeg] and (1 shl (index-1))<>0 then
@@ -118,10 +127,17 @@ begin
   BlockRead(Filesch14, numColSviluppo, Sizeof(numColSviluppo));
   BlockWrite(FileSch2022, numColSviluppo, 4);
   BlockRead(Filesch14, LFooter, Sizeof(LFooter));
+  //imposto la formula di gioco tra 13 e 11
+  case FFormula of
+    1: LFooter := LFooter or 32;
+    2: LFooter := LFooter or 64;
+  end;
   BlockWrite(FileSch2022, LFooter, 2);
   // poi chiude infine i due files
   CloseFile(Filesch14);
   CloseFile(FileSch2022);
+
+  ShowMessage('Il file '+ExtractFilePath(nomefileSCH)+System.IOUtils.TPath.GetFileNameWithoutExtension(nomefileSCH)+'_2022.SCH è stato creato con successo');
 end;
 
 
@@ -167,6 +183,10 @@ begin
   DocsPath := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'happysoft\' + AppName + '\');
 
   CaricaConfigurazione;
+
+  //formula 13
+  FFormula := 1;
+  FNumEventi := 13;
 end;
 
 

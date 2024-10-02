@@ -106,22 +106,22 @@ begin
     end;
     // poi aggiunge il risultato 15
     case Pron15 of
-      1: Col15txt := Col15txt + '0,0';
-      2: Col15txt := Col15txt + '0,1';
-      3: Col15txt := Col15txt + '0,2';
-      4: Col15txt := Col15txt + '0,M';
-      5: Col15txt := Col15txt + '1,0';
-      6: Col15txt := Col15txt + '1,1';
-      7: Col15txt := Col15txt + '1,2';
-      8: Col15txt := Col15txt + '1,M';
-      9: Col15txt := Col15txt + '2,0';
-      10: Col15txt := Col15txt + '2,1';
-      11: Col15txt := Col15txt + '2,2';
-      12: Col15txt := Col15txt + '2,M';
-      13: Col15txt := Col15txt + 'M,0';
-      14: Col15txt := Col15txt + 'M,1';
-      15: Col15txt := Col15txt + 'M,2';
-      16: Col15txt := Col15txt + 'M,M';
+      0: Col15txt := Col15txt + '0,0';
+      1: Col15txt := Col15txt + '0,1';
+      2: Col15txt := Col15txt + '0,2';
+      3: Col15txt := Col15txt + '0,M';
+      4: Col15txt := Col15txt + '1,0';
+      5: Col15txt := Col15txt + '1,1';
+      6: Col15txt := Col15txt + '1,2';
+      7: Col15txt := Col15txt + '1,M';
+      8: Col15txt := Col15txt + '2,0';
+      9 : Col15txt := Col15txt + '2,1';
+      10: Col15txt := Col15txt + '2,2';
+      11: Col15txt := Col15txt + '2,M';
+      12: Col15txt := Col15txt + 'M,0';
+      13: Col15txt := Col15txt + 'M,1';
+      14: Col15txt := Col15txt + 'M,2';
+      15: Col15txt := Col15txt + 'M,M';
     end;
 
     // infine salva la colonna sul nuovo file 2022

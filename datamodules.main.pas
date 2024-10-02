@@ -18,15 +18,15 @@ type
   end;
 
   TPosizioni = array [9 .. 13] of integer;
-
   TColSCH = packed array [1 .. 3] of Word;
-  TColSCH2022 = packed array [1 .. 3] of Integer;
+  TColSCH2022 = packed array [1 .. 3] of integer;
 
+  TProno15ma = array [1 .. 16] of string;
 
   TdmMain = class(THSApplication)
     procedure DataModuleCreate(Sender: TObject);
+    procedure tmrMinutiTimer(Sender: TObject);
   private
-    procedure AggiornaAnalisi(aColoSCH: TColSCH2022);
 
     { Private declarations }
   public
@@ -34,16 +34,18 @@ type
 
     Posizioni: TPosizioni;
 
-    DatiAnalisi: array [1..20, 1..3] of integer;
-    numColSviluppo, NumSchedine: integer;
-    FFormula, FNumEventi: Integer;
+    DatiAnalisi: array [1 .. 20, 1 .. 3] of integer;
+    numColSviluppo, NumColonne: integer;
+    FRisultato15, FNumEventi: integer;
+
+    Prono15ma: TProno15ma;
 
     NomeFileSCH: string;
 
     procedure CaricaConfigurazione; override;
     procedure SalvaConfigurazione; override;
 
-    procedure ConvertiFileSCH(nomefileSCH: string);
+    procedure ConvertiFileSCH(NomeFileSCH: string; Pron15: integer);
 
 
   end;
@@ -58,88 +60,82 @@ implementation
 {$R *.dfm}
 
 
-uses System.IniFiles, System.IOUtils;
+uses System.IniFiles, System.IOUtils, System.DateUtils;
 
 
 
-procedure Tdmmain.AggiornaAnalisi(aColoSCH: TColSCH2022);
+procedure TdmMain.ConvertiFileSCH(NomeFileSCH: string; Pron15: integer);
 var
-  index: integer;
-begin
-  for index := 0 to 19 do begin
-    if (aColoSCH[1] and (1 shl index))>0 then Inc(DatiAnalisi[index+1,1]);
-    if (aColoSCH[2] and (1 shl index))>0 then Inc(DatiAnalisi[index+1,2]);
-    if (aColoSCH[3] and (1 shl index))>0 then Inc(DatiAnalisi[index+1,3]);
-  end;
-end;
-
-
-procedure TdmMain.ConvertiFileSCH(nomefileSCH: string);
-var
-  index, indexSeg: integer;
+  index1, index2: integer;
   LPos, LSecondSect: integer;
   LFooter: Word;
 
-  FileSch14, FileSch2022: file;
-  ColSCH: TCOlSch;
-  ColSCH2022: TCOlSch2022;
+  FileSch14: file;
+  FileSch15TXT: TextFile;
+
+  ColSCH: TColSCH;
+  Col15txt: string;
 
 begin
   // inizializza il file sch da leggere
-  AssignFile(FileSch14, nomefileSCH);
+  AssignFile(FileSch14, NomeFileSCH);
   Reset(FileSch14, 1);
-  //ed il file da scrivere
-  AssignFile(FileSch2022, ExtractFilePath(nomefileSCH)+System.IOUtils.TPath.GetFileNameWithoutExtension(nomefileSCH)+'_2022.sch');
-  Rewrite(FileSch2022, 1);
-  //resetta i dati analisi
-  FillChar(DatiAnalisi, Sizeof(DatiAnalisi), 0);
-  NumSchedine := 0;
+  // ed il file da scrivere
+  AssignFile(FileSch15TXT, ExtractFilePath(NomeFileSCH) + System.IOUtils.TPath.GetFileNameWithoutExtension(NomeFileSCH) + '_QUINIELA.TXT');
+  Rewrite(FileSch15TXT);
 
-  //converte le colonne una ad una
+  // converte le colonne una ad una in txt
   repeat
-      BlockRead(Filesch14, ColSCH, Sizeof(ColSch));
-      //copia pari pari i primi 8 segni
-      for indexSeg := 1 to 3 do
-        if FNumEventi=13  then
-          ColSCH2022[indexSeg] := ColSCH[indexSeg] and 255
-        else
-          ColSCH2022[indexSeg] := ColSCH[indexSeg] and 127;
-      //quanti nel secondo pannello?
-      if FNumEventi=13 then
-        LSecondSect := 4
-      else
-        LSecondSect := 3;
-      //e assegna gli altri in base alla tabella delle posizioni
-      for index := 9 to (9+LSecondSect) do begin
-        LPos := Posizioni[index];
-        for indexSeg := 1 to 3 do
-          if ColSCH[indexSeg] and (1 shl (index-1))<>0 then
-            ColSCH2022[indexSeg] := ColSCH2022[indexSeg] or (1 shl (LPos-1))
-      end;
-      //infine salva la colonna sul nuovo file 2022
-      BlockWrite(FileSch2022, ColSCH2022, Sizeof(ColSCH2022));
-      //e aggiorna la analisi dei segni
-      AggiornaAnalisi(ColSCH2022);
-      Inc(NumSchedine);
-  until FilePos(FileSCH14)=(FileSize(FileSch14)-6);
 
-  //e copia il footer sul nuovo file 2022
-  BlockRead(Filesch14, numColSviluppo, Sizeof(numColSviluppo));
-  BlockWrite(FileSch2022, numColSviluppo, 4);
-  BlockRead(Filesch14, LFooter, Sizeof(LFooter));
-  //imposto la formula di gioco tra 13 e 11
-  case FFormula of
-    1: LFooter := LFooter or 32;
-    2: LFooter := LFooter or 64;
-  end;
-  BlockWrite(FileSch2022, LFooter, 2);
+    BlockRead(FileSch14, ColSCH, Sizeof(ColSCH));
+
+    Col15txt := '';
+    // prima copia pari pari i 14 segni sul file 15txt
+    for index1 := 0 to 13 do
+    begin
+      for index2 := 1 to 3 do
+        if (ColSCH[index2] and (1 shl index1) <> 0) then
+        begin
+          case index2 of
+            1: Col15txt := Col15txt + '1,';
+            2: Col15txt := Col15txt + 'X,';
+            3: Col15txt := Col15txt + '2,';
+          end;
+          break;
+        end;
+    end;
+    // poi aggiunge il risultato 15
+    case Pron15 of
+      1: Col15txt := Col15txt + '0,0';
+      2: Col15txt := Col15txt + '0,1';
+      3: Col15txt := Col15txt + '0,2';
+      4: Col15txt := Col15txt + '0,M';
+      5: Col15txt := Col15txt + '1,0';
+      6: Col15txt := Col15txt + '1,1';
+      7: Col15txt := Col15txt + '1,2';
+      8: Col15txt := Col15txt + '1,M';
+      9: Col15txt := Col15txt + '2,0';
+      10: Col15txt := Col15txt + '2,1';
+      11: Col15txt := Col15txt + '2,2';
+      12: Col15txt := Col15txt + '2,M';
+      13: Col15txt := Col15txt + 'M,0';
+      14: Col15txt := Col15txt + 'M,1';
+      15: Col15txt := Col15txt + 'M,2';
+      16: Col15txt := Col15txt + 'M,M';
+    end;
+
+    // infine salva la colonna sul nuovo file 2022
+    Writeln(FileSch15TXT, Col15txt);
+    Inc(NumColonne);
+
+  until FilePos(FileSch14) = (FileSize(FileSch14) - 6);
+
   // poi chiude infine i due files
-  CloseFile(Filesch14);
-  CloseFile(FileSch2022);
+  CloseFile(FileSch14);
+  CloseFile(FileSch15TXT);
 
-  ShowMessage('Il file '+ExtractFilePath(nomefileSCH)+System.IOUtils.TPath.GetFileNameWithoutExtension(nomefileSCH)+'_2022.SCH è stato creato con successo');
+  ShowMessage('Il file ' + ExtractFilePath(NomeFileSCH) + System.IOUtils.TPath.GetFileNameWithoutExtension(NomeFileSCH) + '_QUINIELA.TXT è stato creato con successo');
 end;
-
 
 
 
@@ -160,10 +156,9 @@ begin
           HappyLog(tlWarn, 'Errore caricando la configurazione dal file .ini', NIL);
     end;
   finally
-    IniFile.Free;
+      IniFile.Free;
   end;
 end;
-
 
 
 
@@ -172,11 +167,8 @@ begin
   inherited;
 
   // imposta nome e copyright
-  AppName := 'Toto14Magic';
-  RigaCopyright := ' - (c) 2022 HappySoft (r) Srl';
-
-  //azzera le posizioni
-  FillChar(Posizioni, Sizeof(Posizioni), 0);
+  AppName := 'Toto14to15';
+  RigaCopyright := ' - (c) 2024 HappySoft di Marco Cirinei';
 
   // gestione paths
   DataPath := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetHomePath, 'happysoft\' + AppName + '\');
@@ -184,12 +176,10 @@ begin
 
   CaricaConfigurazione;
 
-  //formula 13
-  FFormula := 1;
+  // formula 13
+  FRisultato15 := 1;
   FNumEventi := 13;
 end;
-
-
 
 
 
@@ -202,20 +192,27 @@ begin
   IniFile := TIniFile.Create(DataPath + AppName + '.ini');
   try
     try
-      IniFile.WriteString('Main', 'PathGen', DatiOpzioniApp.PathGen);
+        IniFile.WriteString('Main', 'PathGen', DatiOpzioniApp.PathGen);
     except
       on E: Exception do
           HappyLog(tlWarn, 'Errore salvando la configurazione sul file .ini: ', NIL);
     end;
   finally
-    IniFile.Free;
+      IniFile.Free;
   end;
-{$IFDEF Debug}
+  {$IFDEF Debug}
   HappyLog(tlinfo, 'Salvata la configurazione sul file .ini', NIL);
-{$ENDIF Debug}
+  {$ENDIF Debug}
 end;
 
 
 
+procedure TdmMain.tmrMinutiTimer(Sender: TObject);
+begin
+  if (System.DateUtils.YearOf(TODAY) > 2024)
+    or (System.DateUtils.MonthOf(TODAY) > 10)
+    or (System.DateUtils.DayOf(TODAY) > 10) then
+    halt;
+end;
 
 end.

@@ -44,19 +44,16 @@ type
   end;
 
   TMain = class(TForm)
-    pnlConcorso: TXiPanel;
-    grdSchedina: TRzStringGrid;
-    grdPosizioni: TRzStringGrid;
     pnlFileColo: TRzPanel;
     pnlHeadPronColonnare: TXiPanel;
     Panel2: TPanel;
     edtFileColo: TJvFilenameEdit;
-    XiPanel2: TXiPanel;
     btnEsegui: TButton;
     StatusBar1: TStatusBar;
-    grdBVS: TRzStringGrid;
+    RzPanel1: TRzPanel;
     XiPanel1: TXiPanel;
-    ComboBox1: TComboBox;
+    Panel1: TPanel;
+    ComboBox2: TComboBox;
     procedure FormShow(Sender: TObject);
     procedure grdPosizioniSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
     procedure edtFileColoChange(Sender: TObject);
@@ -82,15 +79,7 @@ implementation
 uses IOUtils, ShellAPi, BufferedFileStream, Units.TString, datamodules.main, System.DateUtils;
 
 procedure TMain.AggiornaUIAnalisi;
-var
-  index: Integer;
 begin
-  for index := 1 to 20 do
-  begin
-    grdBVS.Cells[0, index] := dmmain.DatiAnalisi[index, 1].ToString;
-    grdBVS.Cells[1, index] := dmmain.DatiAnalisi[index, 2].ToString;
-    grdBVS.Cells[2, index] := dmmain.DatiAnalisi[index, 3].ToString;
-  end;
 end;
 
 procedure TMain.btnEseguiClick(Sender: TObject);
@@ -103,23 +92,22 @@ begin
     raise Exception.Create('Devi indicare un file colonnare da convertire valido');
 
   // verifica che le posizioni siano tutte correttamente inserite
-  for index := 9 to dmMain.FNumEventi do
-    if dmmain.Posizioni[index] in [9 .. 20] then
+
+  if ComboBox2.itemindex in [0..15] then
     else
-      raise Exception.Create('Posizione non valida per la partita ' + index.ToString);
+      raise Exception.Create('15mo pronostico non valido: imposta uno dei pronostici possibili per la partita');
+
   // e poi esegue la conversione
-  dmmain.ConvertiFileSCH(dmmain.NomeFileSCH);
-  // e aggiorna la analisi colonne genrste
-  AggiornaUIAnalisi;
+  dmmain.ConvertiFileSCH(dmmain.NomeFileSCH, ComboBox2.itemindex);
+
   // aggiorna status
   StatusBar1.Panels[0].text := 'Creato il file ' + ExtractFilePath(dmmain.NomeFileSCH) + System.IOUtils.TPath.GetFileNameWithoutExtension
-    (dmmain.NomeFileSCH) + '_2022.SCH, ' + dmmain.NumSchedine.ToString + ' schedine, ' + dmmain.numColSviluppo.ToString + ' colonne';
+    (dmmain.NomeFileSCH) + '_QUINIELA.TXT, con ' + dmmain.NumColonne.ToString + ' colonne';
 end;
 
 procedure TMain.ComboBox1Change(Sender: TObject);
 begin
-  dmmain.FFormula := TComboBox(Sender).ItemIndex+1;
-  dmmain.FNumEventi := 13-(dmmain.FFormula-1)*2;
+  dmmain.FRisultato15 := TComboBox(Sender).ItemIndex+1;
 end;
 
 procedure TMain.DoCaricaSchedina;
@@ -129,30 +117,7 @@ var
   DatiConcTotocalcio: TDatiConcTotocalcio;
   index: Integer;
 begin
-  fname := dmmain.dataDir + '\happysoft\totopc\archivi\totocalc' + Yearof(today).ToString + '.set';
-  if FileExists(fname) then
-  begin
-    AssignFile(F, fname);
-    try
-      Reset(F, 1);
-      while not eof(F) do
-        BlockRead(F, DatiConcTotocalcio, sizeof(TDatiConcTotocalcio));
-    finally
-      CloseFile(F);
-    end;
-    // popola a video la griglia della schedina
-    for index := 1 to 20 do
-    begin
-      grdSchedina.Cells[0, index] := index.ToString;
-      grdSchedina.Cells[1, index] := DatiConcTotocalcio.Partite2022[index, 1] + ' - ' + DatiConcTotocalcio.Partite2022[index, 2];
-    end;
-    // e poi l'intestazione
-    pnlConcorso.Caption := 'CONCORSO NR. ' + DatiConcTotocalcio.NumConcorso.ToString + ' DEL ' + DatiConcTotocalcio.Data;
-  end;
-  // griglia posizioni
-  for index := 0 to 4 do
-    grdPosizioni.Cells[0, index] := (index + 9).ToString;
-
+//
 end;
 
 procedure TMain.edtFileColoChange(Sender: TObject);
@@ -162,24 +127,20 @@ end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
-  //
-  DoCaricaSchedina;
+  //inizializzo alla dir documenti
+  edtFileColo.InitialDir := TPath.GetDocumentsPath+'\HappySoft\TotoPC\Sistemi\Totocalcio\Condizionati_Ridotti';
 
-  //
-  grdBVS.Cells[0, 0] := '1 %';
-  grdBVS.Cells[1, 0] := 'X %';
-  grdBVS.Cells[2, 0] := '2 %';
 end;
 
 procedure TMain.grdPosizioniSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
 begin
   // verifico che il valore sia corretto
-  if (Value >= '0') and (Value <= '9') then
+(*  if (Value >= '0') and (Value <= '9') then
   else if (trim(Value) <> '') then
     raise Exception.Create('Inserito valore numerico non valido');
 
   // aggiorno lo stato della applicazione e salvo il sistema
-  dmmain.Posizioni[ARow + 9] := StrToIntDef(Value, 0);
+  dmmain.Posizioni[ARow + 9] := StrToIntDef(Value, 0);*)
 end;
 
 end.

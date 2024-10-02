@@ -1,4 +1,4 @@
-program Toto14Magic;
+program Toto14to15;
 
 uses
   Vcl.Forms,
@@ -14,7 +14,8 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  TStyleManager.TrySetStyle('Windows10');
+  Application.Title := 'Toto14to15';
+  TStyleManager.TrySetStyle('Windows11 Impressive Light');
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TMain, Main);
   Application.Run;

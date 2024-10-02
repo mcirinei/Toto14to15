@@ -2,94 +2,28 @@ object Main: TMain
   Tag = 1
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 
-    'Toto14Magic 1.0 - (c) 2022 HappySoft  Srl - Tutti i diritti rise' +
-    'rvati'
-  ClientHeight = 476
-  ClientWidth = 771
-  Color = clBtnFace
+    'Toto14to15 1.0 - (c) 2024 HappySoft di Marco Cirinei - Tutti i d' +
+    'iritti riservati'
+  ClientHeight = 238
+  ClientWidth = 545
+  Color = clMaroon
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
-  object pnlConcorso: TXiPanel
-    Left = 8
-    Top = 8
-    Width = 238
-    Height = 30
-    ColorFace = clWhite
-    ColorGrad = 10805759
-    ColorLight = 36821
-    ColorDark = 27035
-    ColorScheme = csDesert
-    FillDirection = fdVertical
-    TabOrder = 0
-    UseDockManager = True
-  end
-  object grdSchedina: TRzStringGrid
-    Left = 8
-    Top = 43
-    Width = 238
-    Height = 408
-    ColCount = 2
-    RowCount = 21
-    TabOrder = 1
-    ColWidths = (
-      30
-      200)
-    RowHeights = (
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18)
-  end
-  object grdPosizioni: TRzStringGrid
-    Left = 530
-    Top = 110
-    Width = 46
-    Height = 101
-    ColCount = 2
-    DefaultColWidth = 20
-    FixedRows = 0
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goTabs]
-    TabOrder = 2
-    OnSetEditText = grdPosizioniSetEditText
-    RowHeights = (
-      18
-      18
-      18
-      18
-      18)
-  end
   object pnlFileColo: TRzPanel
-    Left = 361
-    Top = 7
+    Left = 72
+    Top = 15
     Width = 400
     Height = 59
-    TabOrder = 3
+    Color = 16578030
+    TabOrder = 0
     object pnlHeadPronColonnare: TXiPanel
       Left = 2
       Top = 2
@@ -102,7 +36,7 @@ object Main: TMain
       ColorScheme = csDesert
       FillDirection = fdVertical
       Align = alTop
-      Caption = 'FILE COLONNARE DA IMPORTARE'
+      Caption = 'FILE COLONNARE TOTOCALCIO 14  (SCH) DA CONVERTIRE A 15 (TXT)'
       TabOrder = 0
       UseDockManager = True
     end
@@ -120,6 +54,9 @@ object Main: TMain
         Height = 25
         TextHint = 'Scegli qui il file colonnare da filtrare'
         Align = alClient
+        DefaultExt = 'SCH'
+        Flat = True
+        ParentFlat = False
         Filter = 'File colonnari (*.sch)|*.sch'
         DialogTitle = 'Scegli il file da filtrare'
         ParentShowHint = False
@@ -127,38 +64,23 @@ object Main: TMain
         TabOrder = 0
         Text = ''
         OnChange = edtFileColoChange
-        ExplicitHeight = 21
+        ExplicitHeight = 19
       end
     end
   end
-  object XiPanel2: TXiPanel
-    Left = 364
-    Top = 81
-    Width = 397
-    Height = 28
-    ColorFace = clWhite
-    ColorGrad = 10805759
-    ColorLight = 36821
-    ColorDark = 27035
-    ColorScheme = csDesert
-    FillDirection = fdVertical
-    Caption = 'POSIZIONI DI DESTINAZIONE DELLE PARTITE DALLA 9 ALLA 13'
-    TabOrder = 4
-    UseDockManager = True
-  end
   object btnEsegui: TButton
-    Left = 620
-    Top = 415
-    Width = 143
+    Left = 188
+    Top = 159
+    Width = 169
     Height = 36
-    Caption = 'Esegui conversione'
-    TabOrder = 5
+    Caption = 'Esegui conversione per Quiniela '
+    TabOrder = 1
     OnClick = btnEseguiClick
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 457
-    Width = 771
+    Top = 219
+    Width = 545
     Height = 19
     Panels = <
       item
@@ -167,67 +89,64 @@ object Main: TMain
         Width = 50
       end>
   end
-  object grdBVS: TRzStringGrid
-    Left = 253
-    Top = 42
-    Width = 88
-    Height = 409
-    ColCount = 3
-    DefaultColWidth = 26
-    FixedCols = 0
-    RowCount = 21
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goTabs]
-    TabOrder = 7
-    RowHeights = (
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18
-      18)
-  end
-  object XiPanel1: TXiPanel
-    Left = 252
-    Top = 8
-    Width = 89
-    Height = 30
-    ColorFace = clWhite
-    ColorGrad = 10805759
-    ColorLight = 36821
-    ColorDark = 27035
-    ColorScheme = csDesert
-    FillDirection = fdVertical
-    Caption = 'DISTRIB. SEGNI'
-    TabOrder = 8
-    UseDockManager = True
-  end
-  object ComboBox1: TComboBox
-    Left = 361
-    Top = 422
-    Width = 145
-    Height = 21
-    Style = csDropDownList
-    ItemIndex = 0
-    TabOrder = 9
-    Text = 'Formula Il 13'
-    OnChange = ComboBox1Change
-    Items.Strings = (
-      'Formula Il 13'
-      'Formula 11')
+  object RzPanel1: TRzPanel
+    Left = 72
+    Top = 82
+    Width = 400
+    Height = 59
+    Color = 16578030
+    TabOrder = 3
+    object XiPanel1: TXiPanel
+      Left = 2
+      Top = 2
+      Width = 396
+      Height = 28
+      ColorFace = clWhite
+      ColorGrad = 10805759
+      ColorLight = 36821
+      ColorDark = 27035
+      ColorScheme = csDesert
+      FillDirection = fdVertical
+      Align = alTop
+      Caption = 'PRONOSTICO 15MO RISULTATO'
+      TabOrder = 0
+      UseDockManager = True
+    end
+    object Panel1: TPanel
+      Left = 2
+      Top = 30
+      Width = 396
+      Height = 27
+      Align = alClient
+      TabOrder = 1
+      object ComboBox2: TComboBox
+        Left = 126
+        Top = 3
+        Width = 145
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 0
+        TabOrder = 0
+        Text = '0 - 0'
+        OnChange = ComboBox1Change
+        Items.Strings = (
+          '0 - 0'
+          '0 - 1'
+          '0 - 2'
+          '0 - M'
+          '1 - 0'
+          '1 - 1'
+          '1 - 2'
+          '1 - M'
+          '2 - 0'
+          '2 - 1'
+          '2 - 2'
+          '2 - M'
+          'M - 0'
+          'M - 1'
+          'M - 2'
+          'M - M')
+      end
+    end
   end
 end

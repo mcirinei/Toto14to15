@@ -5,8 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, XiPanel, RzShellDialogs, Vcl.StdCtrls, Vcl.CheckLst, Vcl.Mask, RzEdit, RzLabel,
-  JvExMask,
-  JvToolEdit, RzButton, RzRadChk, RzBorder, RzPanel, StopWatch,
+  JvExMask, JvToolEdit, RzButton, RzRadChk, RzBorder, RzPanel, StopWatch,
   RzBckgnd, RzLstBox, Vcl.ComCtrls, RzTabs, Vcl.Grids, RzGrids;
 
 const
@@ -55,15 +54,11 @@ type
     Panel1: TPanel;
     ComboBox2: TComboBox;
     procedure FormShow(Sender: TObject);
-    procedure grdPosizioniSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
     procedure edtFileColoChange(Sender: TObject);
-    procedure btnEseguiClick(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
+    procedure btnEseguiClick(Sender: TObject);
 
   private
-    NumColOK: Integer;
-    procedure DoCaricaSchedina;
-    procedure AggiornaUIAnalisi;
   public
     { Public declarations }
   protected
@@ -76,11 +71,8 @@ implementation
 
 {$R *.dfm}
 
-uses IOUtils, ShellAPi, BufferedFileStream, Units.TString, datamodules.main, System.DateUtils;
+uses IOUtils, ShellAPi, Units.TString, datamodules.main, System.DateUtils;
 
-procedure TMain.AggiornaUIAnalisi;
-begin
-end;
 
 procedure TMain.btnEseguiClick(Sender: TObject);
 var
@@ -98,27 +90,18 @@ begin
       raise Exception.Create('15mo pronostico non valido: imposta uno dei pronostici possibili per la partita');
 
   // e poi esegue la conversione
-  dmmain.ConvertiFileSCH(dmmain.NomeFileSCH, ComboBox2.itemindex);
-
+  if dmmain.ConvertiFileSCH(dmmain.NomeFileSCH, ComboBox2.itemindex) then
   // aggiorna status
-  StatusBar1.Panels[0].text := 'Creato il file ' + ExtractFilePath(dmmain.NomeFileSCH) + System.IOUtils.TPath.GetFileNameWithoutExtension
-    (dmmain.NomeFileSCH) + '_QUINIELA.TXT, con ' + dmmain.NumColonne.ToString + ' colonne';
+  StatusBar1.Panels[0].text := 'Creato file in Documenti\HappySoft "' + System.IOUtils.TPath.GetFileNameWithoutExtension
+    (dmmain.NomeFileSCH) + '_QUINIELA.TXT", con ' + dmmain.NumColonne.ToString + ' colonne !';
 end;
+
 
 procedure TMain.ComboBox1Change(Sender: TObject);
 begin
   dmmain.FRisultato15 := TComboBox(Sender).ItemIndex+1;
 end;
 
-procedure TMain.DoCaricaSchedina;
-var
-  F: file;
-  fname: string;
-  DatiConcTotocalcio: TDatiConcTotocalcio;
-  index: Integer;
-begin
-//
-end;
 
 procedure TMain.edtFileColoChange(Sender: TObject);
 begin
@@ -129,18 +112,6 @@ procedure TMain.FormShow(Sender: TObject);
 begin
   //inizializzo alla dir documenti
   edtFileColo.InitialDir := TPath.GetDocumentsPath+'\HappySoft\TotoPC\Sistemi\Totocalcio\Condizionati_Ridotti';
-
-end;
-
-procedure TMain.grdPosizioniSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
-begin
-  // verifico che il valore sia corretto
-(*  if (Value >= '0') and (Value <= '9') then
-  else if (trim(Value) <> '') then
-    raise Exception.Create('Inserito valore numerico non valido');
-
-  // aggiorno lo stato della applicazione e salvo il sistema
-  dmmain.Posizioni[ARow + 9] := StrToIntDef(Value, 0);*)
 end;
 
 end.

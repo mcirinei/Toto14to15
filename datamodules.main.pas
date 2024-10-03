@@ -35,7 +35,7 @@ type
     Posizioni: TPosizioni;
 
     DatiAnalisi: array [1 .. 20, 1 .. 3] of integer;
-    numColSviluppo, NumColonne: integer;
+    NumColonne: integer;
     FRisultato15, FNumEventi: integer;
 
     Prono15ma: TProno15ma;
@@ -44,9 +44,7 @@ type
 
     procedure CaricaConfigurazione; override;
     procedure SalvaConfigurazione; override;
-
-    procedure ConvertiFileSCH(NomeFileSCH: string; Pron15: integer);
-
+    function ConvertiFileSCH(NomeFileSCH: string; Pron15: integer): boolean;
 
   end;
 
@@ -64,7 +62,7 @@ uses System.IniFiles, System.IOUtils, System.DateUtils;
 
 
 
-procedure TdmMain.ConvertiFileSCH(NomeFileSCH: string; Pron15: integer);
+function TdmMain.ConvertiFileSCH(NomeFileSCH: string; Pron15: integer): boolean;
 var
   index1, index2: integer;
   LPos, LSecondSect: integer;
@@ -77,6 +75,8 @@ var
   Col15txt: string;
 
 begin
+  result := FALSE;
+
   // inizializza il file sch da leggere
   AssignFile(FileSch14, NomeFileSCH);
   Reset(FileSch14, 1);
@@ -84,7 +84,9 @@ begin
   AssignFile(FileSch15TXT, ExtractFilePath(NomeFileSCH) + System.IOUtils.TPath.GetFileNameWithoutExtension(NomeFileSCH) + '_QUINIELA.TXT');
   Rewrite(FileSch15TXT);
 
+
   // converte le colonne una ad una in txt
+  NumColonne := 0;
   repeat
 
     BlockRead(FileSch14, ColSCH, Sizeof(ColSCH));
@@ -134,7 +136,10 @@ begin
   CloseFile(FileSch14);
   CloseFile(FileSch15TXT);
 
-  ShowMessage('Il file ' + ExtractFilePath(NomeFileSCH) + System.IOUtils.TPath.GetFileNameWithoutExtension(NomeFileSCH) + '_QUINIELA.TXT è stato creato con successo');
+  //se tutto ok allora conferma esito positivo
+  ShowMessage('Il file ' + System.IOUtils.TPath.GetFileNameWithoutExtension(NomeFileSCH) + '_QUINIELA.TXT,'#13#10+
+  'con '+numcolonne.ToString +' colonne, è stato creato con successo');
+  Result := TRUE;
 end;
 
 

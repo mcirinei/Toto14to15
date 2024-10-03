@@ -52,7 +52,8 @@ object Main: TMain
         Top = 1
         Width = 394
         Height = 25
-        TextHint = 'Scegli qui il file colonnare da filtrare'
+        Hint = 'Scegli qui il file colonnare da convertire...'
+        TextHint = 'Scegli qui il file colonnare da convertire...'
         Align = alClient
         DefaultExt = 'SCH'
         Flat = True
@@ -124,10 +125,11 @@ object Main: TMain
         Top = 3
         Width = 145
         Height = 21
+        Hint = 'Scegli qui il pronostico della 15ma partita'
         Style = csDropDownList
-        ItemIndex = 0
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
-        Text = '0 - 0'
         OnChange = ComboBox1Change
         Items.Strings = (
           '0 - 0'

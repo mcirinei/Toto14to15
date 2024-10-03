@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>Toto14to15.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -125,7 +125,7 @@
         <VerInfo_MajorVer>2022</VerInfo_MajorVer>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_MinorVer>9</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=Toto14Magic;FileVersion=2022.9.2.13;InternalName=;LegalCopyright=(c) 2022 HappySoft Srl;LegalTrademarks=;OriginalFilename=;ProductName=Toto14Magic;ProductVersion=2022.9.2;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=Toto14Magic;FileVersion=2022.9.2.17;InternalName=;LegalCopyright=(c) 2022 HappySoft Srl;LegalTrademarks=;OriginalFilename=;ProductName=Toto14Magic;ProductVersion=2022.9.2;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <DCC_MapFile>3</DCC_MapFile>
         <DCC_DebugInformation>2</DCC_DebugInformation>
         <DCC_LocalDebugSymbols>true</DCC_LocalDebugSymbols>
@@ -133,7 +133,7 @@
         <DCC_StrictVarStrings>false</DCC_StrictVarStrings>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Build>13</VerInfo_Build>
+        <VerInfo_Build>17</VerInfo_Build>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">

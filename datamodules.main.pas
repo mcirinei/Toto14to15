@@ -214,10 +214,10 @@ end;
 
 procedure TdmMain.tmrMinutiTimer(Sender: TObject);
 begin
-  if (System.DateUtils.YearOf(TODAY) > 2024)
-    or (System.DateUtils.MonthOf(TODAY) > 10)
-    or (System.DateUtils.DayOf(TODAY) > 10) then
-    halt;
+//  if (System.DateUtils.YearOf(TODAY) > 2024)
+//    or (System.DateUtils.MonthOf(TODAY) > 10)
+//    or (System.DateUtils.DayOf(TODAY) > 10) then
+//    halt;
 end;
 
 end.

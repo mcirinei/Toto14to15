@@ -173,7 +173,7 @@ begin
 
   // imposta nome e copyright
   AppName := 'Toto14to15';
-  RigaCopyright := ' - (c) 2024 HappySoft di Marco Cirinei';
+  RigaCopyright := ' - (c) 2024-2026 HappySoft di Marco Cirinei';
 
   // gestione paths
   DataPath := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetHomePath, 'happysoft\' + AppName + '\');

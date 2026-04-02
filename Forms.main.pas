@@ -84,7 +84,6 @@ begin
     raise Exception.Create('Devi indicare un file colonnare da convertire valido');
 
   // verifica che le posizioni siano tutte correttamente inserite
-
   if ComboBox2.itemindex in [0..15] then
     else
       raise Exception.Create('15mo pronostico non valido: imposta uno dei pronostici possibili per la partita');

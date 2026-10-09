@@ -1,15 +1,15 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{9895AEF1-7AAE-42FE-989A-247DC67E3C96}</ProjectGuid>
-        <ProjectVersion>20.3</ProjectVersion>
+        <ProjectVersion>20.4</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
-        <MainSource>Toto14to15.dpr</MainSource>
+        <MainSource>Toto14ToText.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
-        <ProjectName Condition="'$(ProjectName)'==''">Toto14to15</ProjectName>
+        <ProjectName Condition="'$(ProjectName)'==''">Toto14ToText</ProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -61,7 +61,7 @@
     <PropertyGroup Condition="'$(Base)'!=''">
         <Custom_Styles>&quot;Windows11 Impressive Light|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows11_Impressive_Light.vsf&quot;</Custom_Styles>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
-        <SanitizedProjectName>Toto14to15</SanitizedProjectName>
+        <SanitizedProjectName>Toto14ToText</SanitizedProjectName>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
         <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
@@ -103,7 +103,7 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName);LastCompiledTime=2026/10/09 10:38:22</VerInfo_Keys>
         <BT_BuildType>Debug</BT_BuildType>
         <DCC_MapFile>3</DCC_MapFile>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
@@ -121,11 +121,11 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Release>20</VerInfo_Release>
+        <VerInfo_Release>9</VerInfo_Release>
         <VerInfo_MajorVer>2026</VerInfo_MajorVer>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_MinorVer>3</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=Toto14Magic;FileVersion=2026.3.20.23;InternalName=;LegalCopyright=(c) 2022 HappySoft Srl;LegalTrademarks=;OriginalFilename=;ProductName=Toto14Magic;ProductVersion=2022.9.2;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);LastCompiledTime=2026/03/20 14:38:06</VerInfo_Keys>
+        <VerInfo_MinorVer>10</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=Toto14Magic;FileVersion=2026.10.9.25;InternalName=;LegalCopyright=(c) 2022 HappySoft Srl;LegalTrademarks=;OriginalFilename=;ProductName=Toto14Magic;ProductVersion=2022.9.2;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);LastCompiledTime=2026/10/09 11:04:15</VerInfo_Keys>
         <DCC_MapFile>3</DCC_MapFile>
         <DCC_DebugInformation>2</DCC_DebugInformation>
         <DCC_LocalDebugSymbols>true</DCC_LocalDebugSymbols>
@@ -133,7 +133,7 @@
         <DCC_StrictVarStrings>false</DCC_StrictVarStrings>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Build>23</VerInfo_Build>
+        <VerInfo_Build>25</VerInfo_Build>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
@@ -158,7 +158,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\..\Common\Units.TString.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -177,7 +176,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">Toto14to15.dpr</Source>
+                    <Source Name="MainSource">Toto14ToText.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\23.0\Bpl\ZComponentDesign280.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\23.0\Bpl\ZComponentDesign280.bpl not found</Excluded_Packages>
@@ -187,7 +186,7 @@
             </Delphi.Personality>
             <Deployment Version="5">
                 <DeployFile LocalName="S:\dati\distribuzioni\SuperMatrici\Toto14Swap.exe" Configuration="Release" Class="ProjectOutput"/>
-                <DeployFile LocalName="S:\dati\distribuzioni\SuperMatrici\Toto14to15.exe" Configuration="Release" Class="ProjectOutput"/>
+                <DeployFile LocalName="S:\dati\distribuzioni\SuperMatrici\Toto14ToText.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\Toto14Swap.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
@@ -846,6 +845,9 @@
                     <Platform Name="Win64x">
                         <Operation>1</Operation>
                     </Platform>
+                    <Platform Name="WinARM64EC">
+                        <Operation>1</Operation>
+                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectiOSDeviceDebug">
                     <Platform Name="iOSDevice32">
@@ -916,6 +918,10 @@
                         <RemoteDir>Assets</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
+                    <Platform Name="WinARM64EC">
+                        <RemoteDir>Assets</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
                 </DeployClass>
                 <DeployClass Name="UWP_DelphiLogo44">
                     <Platform Name="Win32">
@@ -923,6 +929,10 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win64">
+                        <RemoteDir>Assets</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="WinARM64EC">
                         <RemoteDir>Assets</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -1140,6 +1150,7 @@
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64x" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="WinARM64EC" Name="$(PROJECTNAME)"/>
             </Deployment>
             <Platforms>
                 <Platform value="Win32">True</Platform>

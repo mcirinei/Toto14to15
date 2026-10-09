@@ -4,9 +4,9 @@ object Main: TMain
   Top = 0
   BorderStyle = bsDialog
   Caption = 
-    'Toto14to15 1.0 - (c) 2024 HappySoft di Marco Cirinei - Tutti i d' +
-    'iritti riservati'
-  ClientHeight = 238
+    'Toto14ToText 1.1 - (c) 2024-2026 HappySoft di Marco Cirinei - Tut' +
+    'ti i diritti riservati'
+  ClientHeight = 305
   ClientWidth = 545
   Color = clMaroon
   Font.Charset = DEFAULT_CHARSET
@@ -17,13 +17,62 @@ object Main: TMain
   Position = poScreenCenter
   OnShow = FormShow
   TextHeight = 13
-  object pnlFileColo: TRzPanel
+  object pnlTipoConversione: TRzPanel
     Left = 72
     Top = 15
     Width = 400
     Height = 59
     Color = 16578030
     TabOrder = 0
+    object pnlHeadTipoConversione: TXiPanel
+      Left = 2
+      Top = 2
+      Width = 396
+      Height = 28
+      ColorFace = clWhite
+      ColorGrad = 10805759
+      ColorLight = 36821
+      ColorDark = 27035
+      ColorScheme = csDesert
+      FillDirection = fdVertical
+      Align = alTop
+      Caption = 'TIPO DI CONVERSIONE'
+      TabOrder = 0
+      UseDockManager = True
+    end
+    object pnlTipoConversioneCombo: TPanel
+      Left = 2
+      Top = 30
+      Width = 396
+      Height = 27
+      Align = alClient
+      TabOrder = 1
+      object cmbTipoConversione: TComboBox
+        Left = 126
+        Top = 3
+        Width = 145
+        Height = 21
+        Hint = 'Scegli qui per quale gioco convertire il file colonnare'
+        Style = csDropDownList
+        ItemIndex = 0
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        Text = 'Conversione Quiniela'
+        OnChange = cmbTipoConversioneChange
+        Items.Strings = (
+          'Conversione Quiniela'
+          'Conversione Svezia')
+      end
+    end
+  end
+  object pnlFileColo: TRzPanel
+    Left = 72
+    Top = 82
+    Width = 400
+    Height = 59
+    Color = 16578030
+    TabOrder = 1
     object pnlHeadPronColonnare: TXiPanel
       Left = 2
       Top = 2
@@ -71,16 +120,16 @@ object Main: TMain
   end
   object btnEsegui: TButton
     Left = 188
-    Top = 159
+    Top = 226
     Width = 169
     Height = 36
     Caption = 'Esegui conversione per Quiniela '
-    TabOrder = 1
+    TabOrder = 3
     OnClick = btnEseguiClick
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 219
+    Top = 286
     Width = 545
     Height = 19
     Panels = <
@@ -92,11 +141,11 @@ object Main: TMain
   end
   object RzPanel1: TRzPanel
     Left = 72
-    Top = 82
+    Top = 149
     Width = 400
     Height = 59
     Color = 16578030
-    TabOrder = 3
+    TabOrder = 2
     object XiPanel1: TXiPanel
       Left = 2
       Top = 2
@@ -130,7 +179,6 @@ object Main: TMain
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
-        OnChange = ComboBox1Change
         Items.Strings = (
           '0 - 0'
           '0 - 1'
